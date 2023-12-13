@@ -5,43 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8dfc582-886a-4782-888f-2b7eb5a8a880" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/BankSys.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/controller/AccountController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/database/Database.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/model/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/model/Transaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/repository/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/repository/TransactionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/service/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/service/TransactionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/AccountView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ActivitiesPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ActivitiesPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/DepositPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/DepositPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/HistoryPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/HistoryPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ManagePanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ManagePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/TransferalPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/TransferalPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/WithdrawalPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/WithdrawalPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountCreationPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountCreationPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountsPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountsPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/CreationPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/CreationPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/LoginPanel.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/LoginPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/UserView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ActivitiesPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ActivitiesPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/DepositPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/DepositPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/HistoryPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/HistoryPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ManagePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ManagePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/TransferalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/TransferalPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/WithdrawalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/WithdrawalPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountCreationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountCreationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/CreationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/CreationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/LoginPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +50,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.BankSys.executor": "Run",
+    "Maven.BankSys [clean,package].executor": "Run",
+    "Maven.BankSys [package].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "154",
     "git-widget-placeholder": "master",
@@ -84,7 +64,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "project.propGUI",
     "two.files.diff.last.used.file": "/var/home/fjb/Desktop/BankSys/src/main/java/tk/fjbaldon/banksys/view/account/Deposit.java"
   }
 }]]></component>
