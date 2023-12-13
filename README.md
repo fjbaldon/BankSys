@@ -48,6 +48,6 @@ java -jar target/BankSys-1.0-SNAPSHOT.jar
 
 ## License
 
-This project is licensed under the GPL3 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU GPLv3 - see the [LICENSE](LICENSE) file for details.
 
 ---
