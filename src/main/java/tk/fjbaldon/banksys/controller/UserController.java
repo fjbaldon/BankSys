@@ -134,7 +134,6 @@ public class UserController {
         var userRepository = UserRepository.create(connection);
         var accountRepository = AccountRepository.create(userRepository, connection);
         var transactionRepository = TransactionRepository.create(accountRepository, connection);
-        var accountService = AccountService.create(accountRepository, transactionRepository);
         var transactionService = TransactionService.create(transactionRepository);
         var accountView = AccountView.create(
                 BankSys.instance(),
