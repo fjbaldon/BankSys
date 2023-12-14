@@ -1,5 +1,6 @@
 package tk.fjbaldon.banksys;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import tk.fjbaldon.banksys.controller.UserController;
 import tk.fjbaldon.banksys.database.Database;
 import tk.fjbaldon.banksys.repository.AccountRepository;
@@ -39,10 +40,11 @@ public class BankSys extends JFrame {
     public static void start() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException e) {
             try {
-                UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                UIManager.setLookAndFeel(new FlatIntelliJLaf());
+            } catch (UnsupportedLookAndFeelException ex) {
                 System.err.println(ex.getMessage());
             }
         }

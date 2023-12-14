@@ -10,7 +10,7 @@ These instructions will help you get a copy of the project up and running on you
 
 Make sure you have the following software installed on your machine:
 
-- [Java Development Kit (JDK)](https://adoptopenjdk.net/)
+- [Java Development Kit (JDK) 17](https://adoptopenjdk.net/)
 - [Apache Maven](https://maven.apache.org/)
 
 ### Cloning the Repository
