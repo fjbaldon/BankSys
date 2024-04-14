@@ -1,13 +1,13 @@
 package com.github.fjbaldon.banksys;
 
-import com.github.fjbaldon.banksys.controller.UserController;
-import com.github.fjbaldon.banksys.database.Database;
-import com.github.fjbaldon.banksys.repository.AccountRepository;
-import com.github.fjbaldon.banksys.repository.TransactionRepository;
-import com.github.fjbaldon.banksys.repository.UserRepository;
-import com.github.fjbaldon.banksys.service.AccountService;
-import com.github.fjbaldon.banksys.service.UserService;
-import com.github.fjbaldon.banksys.view.user.*;
+import com.github.fjbaldon.banksys.business.service.AccountService;
+import com.github.fjbaldon.banksys.business.service.UserService;
+import com.github.fjbaldon.banksys.data.connection.ConnectionManager;
+import com.github.fjbaldon.banksys.data.dao.AccountDAO;
+import com.github.fjbaldon.banksys.data.dao.TransactionDAO;
+import com.github.fjbaldon.banksys.data.dao.UserDAO;
+import com.github.fjbaldon.banksys.presentation.controller.UserController;
+import com.github.fjbaldon.banksys.presentation.view.user.*;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -44,10 +44,10 @@ public class BankSys extends JFrame {
             System.err.println(e.getMessage());
         }
 
-        var connection = Database.instance().getConnection();
-        var userRepository = UserRepository.create(connection);
-        var accountRepository = AccountRepository.create(userRepository, connection);
-        var transactionRepository = TransactionRepository.create(accountRepository, connection);
+        var connection = ConnectionManager.INSTANCE.getConnection();
+        var userRepository = UserDAO.create(connection);
+        var accountRepository = AccountDAO.create(userRepository, connection);
+        var transactionRepository = TransactionDAO.create(accountRepository, connection);
         var userService = UserService.create(userRepository);
         var accountService = AccountService.create(accountRepository, transactionRepository);
         var userView = UserView.create(
@@ -75,7 +75,7 @@ public class BankSys extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                Database.instance().closeConnection();
+                ConnectionManager.INSTANCE.closeConnection();
                 System.exit(0);
             }
         });
