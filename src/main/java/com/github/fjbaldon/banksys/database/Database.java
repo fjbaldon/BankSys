@@ -28,7 +28,9 @@ public class Database {
         return INSTANCE;
     }
 
-    private static final String DATABASE_URL = "jdbc:sqlite:src/main/resources/bank.db";
+    private static final String DATABASE_URL = "jdbc:mariadb://localhost:3306/banksys";
+    private static final String DATABASE_USERNAME = "banksys";
+    private static final String DATABASE_PASSWORD = "sysknab";
     private static final Database INSTANCE = new Database();
 
     public Connection getConnection() {
@@ -49,7 +51,7 @@ public class Database {
 
     private Database() {
         try {
-            connection = DriverManager.getConnection(DATABASE_URL);
+            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
