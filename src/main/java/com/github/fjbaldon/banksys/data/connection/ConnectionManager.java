@@ -1,11 +1,11 @@
-package com.github.fjbaldon.banksys.database;
+package com.github.fjbaldon.banksys.data.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * The Database class provides a singleton instance representing the connection to the
+ * The ConnectionManager class provides a singleton instance representing the connection to the
  * SQLite database for the banking system. It encapsulates methods to retrieve the
  * database connection, close the connection, and initialize the necessary tables.
  * The class follows the Singleton pattern to ensure a single instance of the database
@@ -23,15 +23,8 @@ import java.sql.SQLException;
  * @version 1.0
  * @since December 2023
  */
-public class Database {
-    public static Database instance() {
-        return INSTANCE;
-    }
-
-    private static final String DATABASE_URL = "jdbc:mariadb://localhost:3306/banksys";
-    private static final String DATABASE_USERNAME = "banksys";
-    private static final String DATABASE_PASSWORD = "sysknab";
-    private static final Database INSTANCE = new Database();
+public enum ConnectionManager {
+    INSTANCE;
 
     public Connection getConnection() {
         return connection;
@@ -39,9 +32,8 @@ public class Database {
 
     public void closeConnection() {
         try {
-            if (connection != null && !connection.isClosed()) {
+            if (connection != null && !connection.isClosed())
                 connection.close();
-            }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -49,9 +41,13 @@ public class Database {
 
     private Connection connection;
 
-    private Database() {
+    private ConnectionManager() {
         try {
-            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
+            String url = "jdbc:mariadb://localhost:3306/banksys";
+            String username = "banksys";
+            String password = "sysknab";
+
+            connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
