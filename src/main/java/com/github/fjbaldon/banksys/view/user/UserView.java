@@ -1,7 +1,7 @@
-package tk.fjbaldon.banksys.view.user;
+package com.github.fjbaldon.banksys.view.user;
 
-import tk.fjbaldon.banksys.BankSys;
-import tk.fjbaldon.banksys.model.User;
+import com.github.fjbaldon.banksys.BankSys;
+import com.github.fjbaldon.banksys.model.User;
 
 /**
  * The UserView class provides methods for displaying different panels related to user interactions.

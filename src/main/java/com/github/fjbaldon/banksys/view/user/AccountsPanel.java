@@ -1,6 +1,6 @@
-package tk.fjbaldon.banksys.view.user;
+package com.github.fjbaldon.banksys.view.user;
 
-import tk.fjbaldon.banksys.model.User;
+import com.github.fjbaldon.banksys.model.User;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

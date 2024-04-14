@@ -1,6 +1,5 @@
 package com.github.fjbaldon.banksys;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.github.fjbaldon.banksys.controller.UserController;
 import com.github.fjbaldon.banksys.database.Database;
 import com.github.fjbaldon.banksys.repository.AccountRepository;
@@ -42,11 +41,7 @@ public class BankSys extends JFrame {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
                  IllegalAccessException e) {
-            try {
-                UIManager.setLookAndFeel(new FlatIntelliJLaf());
-            } catch (UnsupportedLookAndFeelException ex) {
-                System.err.println(ex.getMessage());
-            }
+            System.err.println(e.getMessage());
         }
 
         var connection = Database.instance().getConnection();

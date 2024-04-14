@@ -1,6 +1,6 @@
-package tk.fjbaldon.banksys.view.account;
+package com.github.fjbaldon.banksys.view.account;
 
-import tk.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.model.Account;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;

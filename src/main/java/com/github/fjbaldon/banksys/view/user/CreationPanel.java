@@ -1,4 +1,4 @@
-package tk.fjbaldon.banksys.view.user;
+package com.github.fjbaldon.banksys.view.user;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
