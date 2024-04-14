@@ -1,7 +1,7 @@
-package tk.fjbaldon.banksys.view.account;
+package com.github.fjbaldon.banksys.view.account;
 
-import tk.fjbaldon.banksys.BankSys;
-import tk.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.BankSys;
+import com.github.fjbaldon.banksys.model.Account;
 
 /**
  * The AccountView class provides methods for displaying different panels related to account activities.

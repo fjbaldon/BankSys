@@ -1,7 +1,7 @@
-package tk.fjbaldon.banksys.service;
+package com.github.fjbaldon.banksys.service;
 
-import tk.fjbaldon.banksys.model.User;
-import tk.fjbaldon.banksys.repository.UserRepository;
+import com.github.fjbaldon.banksys.model.User;
+import com.github.fjbaldon.banksys.repository.UserRepository;
 
 /**
  * The UserService class provides methods for user authentication and registration.

@@ -1,4 +1,4 @@
-package tk.fjbaldon.banksys.database;
+package com.github.fjbaldon.banksys.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,14 +1,14 @@
-package tk.fjbaldon.banksys;
+package com.github.fjbaldon.banksys;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import tk.fjbaldon.banksys.controller.UserController;
-import tk.fjbaldon.banksys.database.Database;
-import tk.fjbaldon.banksys.repository.AccountRepository;
-import tk.fjbaldon.banksys.repository.TransactionRepository;
-import tk.fjbaldon.banksys.repository.UserRepository;
-import tk.fjbaldon.banksys.service.AccountService;
-import tk.fjbaldon.banksys.service.UserService;
-import tk.fjbaldon.banksys.view.user.*;
+import com.github.fjbaldon.banksys.controller.UserController;
+import com.github.fjbaldon.banksys.database.Database;
+import com.github.fjbaldon.banksys.repository.AccountRepository;
+import com.github.fjbaldon.banksys.repository.TransactionRepository;
+import com.github.fjbaldon.banksys.repository.UserRepository;
+import com.github.fjbaldon.banksys.service.AccountService;
+import com.github.fjbaldon.banksys.service.UserService;
+import com.github.fjbaldon.banksys.view.user.*;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

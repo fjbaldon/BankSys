@@ -1,8 +1,8 @@
-package tk.fjbaldon.banksys.service;
+package com.github.fjbaldon.banksys.service;
 
-import tk.fjbaldon.banksys.model.Account;
-import tk.fjbaldon.banksys.model.Transaction;
-import tk.fjbaldon.banksys.repository.TransactionRepository;
+import com.github.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.model.Transaction;
+import com.github.fjbaldon.banksys.repository.TransactionRepository;
 
 import java.util.ArrayList;
 import java.util.List;

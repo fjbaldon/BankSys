@@ -1,7 +1,7 @@
-package tk.fjbaldon.banksys.repository;
+package com.github.fjbaldon.banksys.repository;
 
-import tk.fjbaldon.banksys.model.Account;
-import tk.fjbaldon.banksys.model.Transaction;
+import com.github.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.model.Transaction;
 
 import java.sql.Connection;
 import java.sql.SQLException;

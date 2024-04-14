@@ -1,17 +1,17 @@
-package tk.fjbaldon.banksys.controller;
+package com.github.fjbaldon.banksys.controller;
 
-import tk.fjbaldon.banksys.BankSys;
-import tk.fjbaldon.banksys.database.Database;
-import tk.fjbaldon.banksys.model.Account;
-import tk.fjbaldon.banksys.model.User;
-import tk.fjbaldon.banksys.repository.AccountRepository;
-import tk.fjbaldon.banksys.repository.TransactionRepository;
-import tk.fjbaldon.banksys.repository.UserRepository;
-import tk.fjbaldon.banksys.service.AccountService;
-import tk.fjbaldon.banksys.service.TransactionService;
-import tk.fjbaldon.banksys.service.UserService;
-import tk.fjbaldon.banksys.view.account.*;
-import tk.fjbaldon.banksys.view.user.UserView;
+import com.github.fjbaldon.banksys.BankSys;
+import com.github.fjbaldon.banksys.database.Database;
+import com.github.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.model.User;
+import com.github.fjbaldon.banksys.repository.AccountRepository;
+import com.github.fjbaldon.banksys.repository.TransactionRepository;
+import com.github.fjbaldon.banksys.repository.UserRepository;
+import com.github.fjbaldon.banksys.service.AccountService;
+import com.github.fjbaldon.banksys.service.TransactionService;
+import com.github.fjbaldon.banksys.service.UserService;
+import com.github.fjbaldon.banksys.view.account.*;
+import com.github.fjbaldon.banksys.view.user.UserView;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,10 +1,10 @@
-package tk.fjbaldon.banksys.service;
+package com.github.fjbaldon.banksys.service;
 
-import tk.fjbaldon.banksys.model.Account;
-import tk.fjbaldon.banksys.model.Transaction;
-import tk.fjbaldon.banksys.model.User;
-import tk.fjbaldon.banksys.repository.AccountRepository;
-import tk.fjbaldon.banksys.repository.TransactionRepository;
+import com.github.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.model.Transaction;
+import com.github.fjbaldon.banksys.model.User;
+import com.github.fjbaldon.banksys.repository.AccountRepository;
+import com.github.fjbaldon.banksys.repository.TransactionRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

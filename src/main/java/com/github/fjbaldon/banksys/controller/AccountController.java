@@ -1,11 +1,11 @@
-package tk.fjbaldon.banksys.controller;
+package com.github.fjbaldon.banksys.controller;
 
-import tk.fjbaldon.banksys.model.Account;
-import tk.fjbaldon.banksys.model.User;
-import tk.fjbaldon.banksys.service.AccountService;
-import tk.fjbaldon.banksys.service.TransactionService;
-import tk.fjbaldon.banksys.view.account.AccountView;
-import tk.fjbaldon.banksys.view.user.UserView;
+import com.github.fjbaldon.banksys.model.Account;
+import com.github.fjbaldon.banksys.model.User;
+import com.github.fjbaldon.banksys.service.AccountService;
+import com.github.fjbaldon.banksys.service.TransactionService;
+import com.github.fjbaldon.banksys.view.account.AccountView;
+import com.github.fjbaldon.banksys.view.user.UserView;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package tk.fjbaldon.banksys.model;
+package com.github.fjbaldon.banksys.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
