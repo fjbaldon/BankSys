@@ -10,7 +10,7 @@ These instructions will help you get a copy of the project up and running on you
 
 Make sure you have the following software installed on your machine:
 
-- [Java Development Kit (JDK) 17](https://adoptopenjdk.net/)
+- [Java Development Kit (JDK) 21](https://adoptopenjdk.net/)
 - [Apache Maven](https://maven.apache.org/)
 
 ### Cloning the Repository
@@ -35,7 +35,7 @@ mvn clean package
 Run the application using the generated JAR file:
 
 ```bash
-java -jar target/BankSys-1.0-SNAPSHOT.jar
+java -jar target/BankSys-0.1.jar
 ```
 
 ## Additional Information
