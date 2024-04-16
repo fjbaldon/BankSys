@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8dfc582-886a-4782-888f-2b7eb5a8a880" name="Changes" comment="controller: do not instantiate new instance of AccountService">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ActivitiesPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ActivitiesPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/DepositPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/DepositPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/HistoryPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/HistoryPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ManagePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/ManagePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/TransferalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/TransferalPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/WithdrawalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/account/WithdrawalPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountCreationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountCreationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/AccountsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/CreationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/CreationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tk/fjbaldon/banksys/view/user/LoginPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,11 +61,17 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/var/home/fjb/Desktop/BankSys",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propGUI",
-    "two.files.diff.last.used.file": "/var/home/fjb/Desktop/BankSys/src/main/java/tk/fjbaldon/banksys/view/account/Deposit.java"
+    "two.files.diff.last.used.file": "/var/home/fjb/Desktop/BankSys/src/main/java/tk/fjbaldon/banksys/view/account/Deposit.java",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -90,7 +106,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.9-corretto-17.0.9-8336523bb0d9-9b5c8e75" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -102,6 +119,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1702209714503</updated>
+      <workItem from="1713227865112" duration="312000" />
     </task>
     <task id="LOCAL-00001" summary="docs: Add initial version of README.md">
       <option name="closed" value="true" />
@@ -137,6 +155,9 @@
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="docs: Add initial version of README.md" />
