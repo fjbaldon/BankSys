@@ -2,6 +2,17 @@
 CREATE DATABASE IF NOT EXISTS BankSys;  -- Replace with your desired database name
 USE BankSys;
 
+-- Login table
+CREATE TABLE Login (
+  login_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password_hash CHAR(64) NOT NULL,  -- Secure hash of password
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  customer_id INT UNSIGNED UNIQUE NOT NULL,
+  FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+);
+
 -- Customer table
 CREATE TABLE Customer (
   customer_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -43,17 +54,6 @@ CREATE TABLE Transaction (
   FOREIGN KEY (account_id) REFERENCES Account(account_id),
   FOREIGN KEY (from_account_id) REFERENCES Account(account_id),
   FOREIGN KEY (to_account_id) REFERENCES Account(account_id)
-);
-
--- Login table
-CREATE TABLE Login (
-  login_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) UNIQUE NOT NULL,
-  password_hash CHAR(64) NOT NULL,  -- Secure hash of password
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  customer_id INT UNSIGNED UNIQUE NOT NULL,
-  FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
 -- Grant permissions (adjust based on your needs)

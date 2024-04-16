@@ -1,7 +1,7 @@
 package com.github.fjbaldon.banksys.presentation.controller;
 
 import com.github.fjbaldon.banksys.business.model.Account;
-import com.github.fjbaldon.banksys.business.model.User;
+import com.github.fjbaldon.banksys.business.model.Customer;
 import com.github.fjbaldon.banksys.business.service.AccountService;
 import com.github.fjbaldon.banksys.business.service.TransactionService;
 import com.github.fjbaldon.banksys.presentation.view.account.AccountView;
@@ -11,14 +11,14 @@ import java.math.BigDecimal;
 
 /**
  * The AccountController class acts as a controller in the MVC (Model-View-Controller) architecture
- * for managing interactions related to a specific bank account. It handles user input from the
+ * for managing interactions related to a specific bank account. It handles customer input from the
  * associated AccountView and communicates with the AccountService and TransactionService to perform
  * actions such as deposit, withdrawal, transfer, and account deletion. The class also updates the
- * user and account views accordingly.
+ * customer and account views accordingly.
  *
  * The init() method sets up event listeners for various buttons in the AccountView and initializes
  * the account's transaction history. Methods prefixed with "handle" are responsible for handling
- * specific user actions and invoking the appropriate service methods.
+ * specific customer actions and invoking the appropriate service methods.
  *
  * Note: Error handling is implemented to handle various scenarios, and appropriate messages
  * are displayed in the views. In a real-world application, more sophisticated error handling and
@@ -29,17 +29,17 @@ import java.math.BigDecimal;
  * @since December 2023
  */
 public class AccountController {
-    public static AccountController create(User user,
+    public static AccountController create(Customer customer,
                                            Account account,
                                            AccountService accountService,
                                            TransactionService transactionService,
                                            UserView userView,
                                            AccountView accountView) {
-        return new AccountController(user, account, accountService, transactionService, userView, accountView);
+        return new AccountController(customer, account, accountService, transactionService, userView, accountView);
     }
 
     public void init() {
-        accountView.getActivities().addBackToAccountsButtonListener(e -> userView.showAccounts(user));
+        accountView.getActivities().addBackToAccountsButtonListener(e -> userView.showAccounts(customer));
         accountView.getActivities().addDepositButtonListener(e -> accountView.showDeposit(account));
         accountView.getActivities().addWithdrawalButtonListener(e -> accountView.showWithdraw(account));
         accountView.getActivities().addTransferalButtonListener(e -> accountView.showTransfer(account));
@@ -76,7 +76,7 @@ public class AccountController {
         var result = accountService.deposit(account, amount);
         switch (result) {
             case OK -> {
-                user.setOwnedAccounts(accountService.listAccountsOf(user));
+                customer.setOwnedAccounts(accountService.listAccountsOf(customer));
                 account.setTransactions(transactionService.listTransactionsOf(account));
 
                 accountView.getDeposit().update();
@@ -99,7 +99,7 @@ public class AccountController {
         var result = accountService.withdraw(account, amount);
         switch (result) {
             case OK -> {
-                user.setOwnedAccounts(accountService.listAccountsOf(user));
+                customer.setOwnedAccounts(accountService.listAccountsOf(customer));
                 account.setTransactions(transactionService.listTransactionsOf(account));
 
                 accountView.getWithdraw().update();
@@ -131,7 +131,7 @@ public class AccountController {
         var result = accountService.transfer(account, receivingAccountNumber, amount);
         switch (result) {
             case OK -> {
-                user.setOwnedAccounts(accountService.listAccountsOf(user));
+                customer.setOwnedAccounts(accountService.listAccountsOf(customer));
                 account.setTransactions(transactionService.listTransactionsOf(account));
 
                 accountView.getTransfer().update();
@@ -155,24 +155,24 @@ public class AccountController {
             throw new RuntimeException("FATAL_ERR");
 
         accountView.getManage().displaySuccessMessage("Account deletion was successful. You will be redirected");
-        user.setOwnedAccounts(accountService.listAccountsOf(user));
-        userView.showAccounts(user);
+        customer.setOwnedAccounts(accountService.listAccountsOf(customer));
+        userView.showAccounts(customer);
     }
 
-    private final User user;
+    private final Customer customer;
     private final Account account;
     private final AccountService accountService;
     private final TransactionService transactionService;
     private final UserView userView;
     private final AccountView accountView;
 
-    private AccountController(User user,
+    private AccountController(Customer customer,
                               Account account,
                               AccountService accountService,
                               TransactionService transactionService,
                               UserView userView,
                               AccountView accountView) {
-        this.user = user;
+        this.customer = customer;
         this.account = account;
         this.accountService = accountService;
         this.transactionService = transactionService;

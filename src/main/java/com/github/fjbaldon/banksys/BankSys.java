@@ -1,11 +1,11 @@
 package com.github.fjbaldon.banksys;
 
 import com.github.fjbaldon.banksys.business.service.AccountService;
-import com.github.fjbaldon.banksys.business.service.UserService;
+import com.github.fjbaldon.banksys.business.service.CustomerService;
 import com.github.fjbaldon.banksys.data.connection.ConnectionManager;
 import com.github.fjbaldon.banksys.data.dao.AccountDAO;
+import com.github.fjbaldon.banksys.data.dao.CustomerDAO;
 import com.github.fjbaldon.banksys.data.dao.TransactionDAO;
-import com.github.fjbaldon.banksys.data.dao.UserDAO;
 import com.github.fjbaldon.banksys.presentation.controller.UserController;
 import com.github.fjbaldon.banksys.presentation.view.user.*;
 
@@ -45,10 +45,10 @@ public class BankSys extends JFrame {
         }
 
         var connection = ConnectionManager.INSTANCE.getConnection();
-        var userRepository = UserDAO.create(connection);
+        var userRepository = CustomerDAO.create(connection);
         var accountRepository = AccountDAO.create(userRepository, connection);
         var transactionRepository = TransactionDAO.create(accountRepository, connection);
-        var userService = UserService.create(userRepository);
+        var userService = CustomerService.create(userRepository);
         var accountService = AccountService.create(accountRepository, transactionRepository);
         var userView = UserView.create(
                 BankSys.instance(),
@@ -63,6 +63,7 @@ public class BankSys extends JFrame {
     public static BankSys instance() {
         return INSTANCE;
     }
+
     private static final BankSys INSTANCE = new BankSys();
 
     private BankSys() {

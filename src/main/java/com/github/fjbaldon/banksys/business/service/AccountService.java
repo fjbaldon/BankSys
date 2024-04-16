@@ -2,7 +2,7 @@ package com.github.fjbaldon.banksys.business.service;
 
 import com.github.fjbaldon.banksys.business.model.Account;
 import com.github.fjbaldon.banksys.business.model.Transaction;
-import com.github.fjbaldon.banksys.business.model.User;
+import com.github.fjbaldon.banksys.business.model.Customer;
 import com.github.fjbaldon.banksys.data.dao.AccountDAO;
 import com.github.fjbaldon.banksys.data.dao.TransactionDAO;
 
@@ -11,28 +11,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The AccountService class provides business logic for managing user accounts and performing
- * financial transactions. It communicates with the AccountDAO and TransactionDAO
- * to perform operations such as listing accounts, registering new accounts, depositing funds,
- * withdrawing funds, transferring funds between accounts, and deleting accounts.
- *
- * Note: Error handling is minimal in this example for brevity. In a real-world application,
- * robust error handling and logging should be implemented. Additionally, methods for updating
- * transactions and handling account deletions have been added for completeness.
- *
- * @author Francis John Baldon
- * @version 1.0
- * @since December 2023
- */
-public class AccountService {
+public final class AccountService {
     public static AccountService create(AccountDAO accountDAO,
                                         TransactionDAO transactionDAO) {
         return new AccountService(accountDAO, transactionDAO);
     }
 
-    public List<Account> listAccountsOf(User user) {
-        return (user == null) ? new ArrayList<>() : accountDAO.getAccountsOf(user);
+    public List<Account> listAccountsOf(Customer customer) {
+        return (customer == null) ? new ArrayList<>() : accountDAO.getAccountsOf(customer);
     }
 
     public enum RegistrationStatus {

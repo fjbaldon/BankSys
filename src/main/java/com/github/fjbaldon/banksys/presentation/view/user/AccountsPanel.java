@@ -1,6 +1,6 @@
 package com.github.fjbaldon.banksys.presentation.view.user;
 
-import com.github.fjbaldon.banksys.business.model.User;
+import com.github.fjbaldon.banksys.business.model.Customer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,12 +16,12 @@ public class AccountsPanel {
         return new AccountsPanel();
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Customer customer) {
+        this.customer = customer;
     }
 
     public JPanel get() {
-        if (user == null)
+        if (customer == null)
             throw new RuntimeException("FATAL_ERR");
 
         return panel;
@@ -43,7 +43,7 @@ public class AccountsPanel {
         }
 
         tableModel.setRowCount(0);
-        for (var account : user.getOwnedAccounts()) {
+        for (var account : customer.getOwnedAccounts()) {
             var accountNumberStr = account.getNumber();
             var balanceStr = account.getBalance();
 
@@ -86,7 +86,7 @@ public class AccountsPanel {
         JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private User user;
+    private Customer customer;
     private JPanel panel;
     private JButton openAccountButton;
     private JButton backToLoginButton;

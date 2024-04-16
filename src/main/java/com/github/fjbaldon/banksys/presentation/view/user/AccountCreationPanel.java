@@ -1,6 +1,6 @@
 package com.github.fjbaldon.banksys.presentation.view.user;
 
-import com.github.fjbaldon.banksys.business.model.User;
+import com.github.fjbaldon.banksys.business.model.Customer;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -11,12 +11,12 @@ public class AccountCreationPanel {
         return new AccountCreationPanel();
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Customer customer) {
+        this.customer = customer;
     }
 
     public JPanel get() {
-        if (user == null)
+        if (customer == null)
             throw new RuntimeException("FATAL_ERR");
 
         return panel;
@@ -62,7 +62,7 @@ public class AccountCreationPanel {
         JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private User user;
+    private Customer customer;
     private JPanel panel;
     private JTextField accountNumberField;
     private JButton generateButton;

@@ -1,7 +1,7 @@
 package com.github.fjbaldon.banksys.presentation.view.user;
 
 import com.github.fjbaldon.banksys.BankSys;
-import com.github.fjbaldon.banksys.business.model.User;
+import com.github.fjbaldon.banksys.business.model.Customer;
 
 /**
  * The UserView class provides methods for displaying different panels related to user interactions.
@@ -54,16 +54,16 @@ public class UserView {
         bankSys.revalidate();
     }
 
-    public void showAccounts(User user) {
-        accountsPanel.setUser(user);
+    public void showAccounts(Customer customer) {
+        accountsPanel.setUser(customer);
         accountsPanel.update();
 
         bankSys.setContentPane(accountsPanel.get());
         bankSys.revalidate();
     }
 
-    public void showAccountCreation(User user) {
-        accountCreationPanel.setUser(user);
+    public void showAccountCreation(Customer customer) {
+        accountCreationPanel.setUser(customer);
         accountCreationPanel.update();
 
         bankSys.setContentPane(accountCreationPanel.get());

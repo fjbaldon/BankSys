@@ -4,65 +4,52 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * The ConnectionManager class provides a singleton instance representing the connection to the
- * SQLite database for the banking system. It encapsulates methods to retrieve the
- * database connection, close the connection, and initialize the necessary tables.
- * The class follows the Singleton pattern to ensure a single instance of the database
- * connection throughout the application.
- *
- * The database is initialized with three tables: 'users,' 'accounts,' and 'transactions.'
- * Each table is created if it does not exist, and the necessary foreign key relationships
- * are established between them. The database connection is established during the
- * initialization of the singleton instance.
- *
- * Note: Error handling is minimal in this example for brevity. In a real-world
- * application, robust error handling and logging should be implemented.
- *
- * @author Francis John Baldon
- * @version 1.0
- * @since December 2023
- */
 public enum ConnectionManager {
     INSTANCE;
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         return connection;
     }
 
-    public void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed())
-                connection.close();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+    public void closeConnection() throws SQLException {
+        if (connection != null && !connection.isClosed())
+            connection.close();
     }
 
-    private Connection connection;
+    private final Connection connection;
 
-    private ConnectionManager() {
+    ConnectionManager() {
         try {
-            String url = "jdbc:mariadb://localhost:3306/banksys";
+            String url = "jdbc:mariadb://localhost:3306/BankSys";
             String username = "banksys";
             String password = "sysknab";
 
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException("Failed to establish database connection", e);
         }
 
-        var createUsersQuery = "CREATE TABLE IF NOT EXISTS users ("
+        var createLoginTableQ = "CREATE TABLE IF NOT EXISTS Login ("
+                + "login_id INT UNSIGNED AUTO_INCREMENT, "
+                + "username VARCHAR(255) UNIQUE NOT NULL, "
+                + "password_hash CHAR(64) NOT NULL, "
+                + "created_at DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                + "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "
+                + "customer_id INT UNSIGNED UNIQUE NOT NULL, "
+                + "PRIMARY KEY (login_id), "
+                + "FOREIGN KEY (customer_id) references Customer(customer_id)";
+
+        var createCustomerTableQ = "CREATE TABLE IF NOT EXISTS Customer ("
                 + "name VARCHAR(255) PRIMARY KEY UNIQUE, "
                 + "password CHAR(64) NOT NULL)";
 
-        var createAccountsQuery = "CREATE TABLE IF NOT EXISTS accounts ("
+        var createAccountTableQ = "CREATE TABLE IF NOT EXISTS Account ("
                 + "number INTEGER PRIMARY KEY UNIQUE, "
                 + "balance DECIMAL(18, 2) NOT NULL, "
                 + "owner VARCHAR(255) NOT NULL, "
                 + "FOREIGN KEY (owner) REFERENCES users(name))";
 
-        var createTransactionsQuery = "CREATE TABLE IF NOT EXISTS transactions ("
+        var createTransactionTableQ = "CREATE TABLE IF NOT EXISTS Transaction ("
                 + "id INTEGER PRIMARY KEY UNIQUE, "
                 + "date TEXT NOT NULL, "
                 + "description TEXT NOT NULL, "
@@ -70,14 +57,16 @@ public enum ConnectionManager {
                 + "account_number INTEGER NOT NULL, "
                 + "FOREIGN KEY (account_number) REFERENCES accounts(number))";
 
-        try (var statement = connection.prepareStatement(createUsersQuery);
-             var statement1 = connection.prepareStatement(createAccountsQuery);
-             var statement2 = connection.prepareStatement(createTransactionsQuery)) {
+        try (var statement =  connection.prepareStatement(createLoginTableQ);
+             var statement1 = connection.prepareStatement(createCustomerTableQ);
+             var statement2 = connection.prepareStatement(createAccountTableQ);
+             var statement3 = connection.prepareStatement(createTransactionTableQ)) {
             statement.execute();
             statement1.execute();
             statement2.execute();
+            statement3.execute();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException("Failed to initialize database tables", e);
         }
     }
 }
