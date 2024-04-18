@@ -2,17 +2,17 @@ package com.github.fjbaldon.banksys.data.dao;
 
 import com.github.fjbaldon.banksys.business.model.Account;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class AccountDAO {
+
     public Account createAccount(Account account) throws SQLException {
         String sql = "INSERT INTO Account (account_number, account_type, balance, interest_rate, customer_id) " +
                 "VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, account.accountNumber());
             stmt.setString(2, account.accountType().toString());
             stmt.setBigDecimal(3, account.balance());
@@ -34,10 +34,9 @@ public final class AccountDAO {
         }
     }
 
-    public Account getAccountById(long id) throws SQLException {
+    public Account getAccountById(Long id) throws SQLException {
         String sql = "SELECT * FROM Account WHERE account_id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
@@ -57,8 +56,7 @@ public final class AccountDAO {
     public List<Account> getAccounts() throws SQLException {
         String sql = "SELECT * FROM Account";
         List<Account> accounts = new ArrayList<>();
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 accounts.add(new Account(
@@ -76,8 +74,7 @@ public final class AccountDAO {
 
     public void updateAccount(Account account) throws SQLException {
         String sql = "UPDATE Account SET account_number = ?, account_type = ?, balance = ?, interest_rate = ?, customer_id = ? WHERE account_id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, account.accountNumber());
             stmt.setString(2, account.accountType().toString());
             stmt.setBigDecimal(3, account.balance());
@@ -90,14 +87,15 @@ public final class AccountDAO {
 
     public void deleteAccount(Account account) throws SQLException {
         String sql = "DELETE FROM Account WHERE account_id = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, account.accountId());
             stmt.executeUpdate();
         }
     }
 
-    private Connection getConnection() throws SQLException {
-        return ConnectionManager.INSTANCE.getConnection();
+    public AccountDAO(Connection connection) {
+        this.connection = Objects.requireNonNull(connection);
     }
+
+    private final Connection connection;
 }

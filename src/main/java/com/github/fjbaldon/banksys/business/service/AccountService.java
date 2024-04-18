@@ -1,153 +1,43 @@
 package com.github.fjbaldon.banksys.business.service;
 
 import com.github.fjbaldon.banksys.business.model.Account;
-import com.github.fjbaldon.banksys.business.model.Transaction;
-import com.github.fjbaldon.banksys.business.model.Customer;
 import com.github.fjbaldon.banksys.data.dao.AccountDAO;
-import com.github.fjbaldon.banksys.data.dao.TransactionDAO;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Objects;
 
 public final class AccountService {
-    public static AccountService create(AccountDAO accountDAO,
-                                        TransactionDAO transactionDAO) {
-        return new AccountService(accountDAO, transactionDAO);
+
+    public Account createAccount(String accountNumber, Account.AccountType accountType, BigDecimal balance,
+                                 BigDecimal interestRate, Long customerId) throws SQLException {
+        Account account = new Account.Builder()
+                .accountNumber(accountNumber)
+                .accountType(accountType)
+                .balance(balance)
+                .interestRate(interestRate)
+                .customerId(customerId)
+                .build();
+        accountDAO.createAccount(account);
+        return account;
     }
 
-    public List<Account> listAccountsOf(Customer customer) {
-        return (customer == null) ? new ArrayList<>() : accountDAO.getAccountsOf(customer);
+    public Account getAccountById(Long accountId) throws SQLException {
+        Account account = accountDAO.getAccountById(accountId);
+        return account;
     }
 
-    public enum RegistrationStatus {
-        OK,
-        ACCOUNT_NUMBER_TAKEN,
-        INVALID_ACCOUNT
+    public void updateAccount(Account account) throws SQLException {
+        accountDAO.updateAccount(account);
     }
 
-    public RegistrationStatus register(Account account) {
-        if (account == null)
-            return RegistrationStatus.INVALID_ACCOUNT;
-
-        if (accountDAO.getAccountOf(account.getNumber()) != null)
-            return RegistrationStatus.ACCOUNT_NUMBER_TAKEN;
-
-        accountDAO.save(account);
-
-        return RegistrationStatus.OK;
+    public void deleteAccount(Account account) throws SQLException {
+        accountDAO.deleteAccount(account);
     }
 
-    public enum DepositStatus {
-        OK,
-        INVALID_AMOUNT,
-        INVALID_ARGUMENTS
-    }
-
-    public DepositStatus deposit(Account account, BigDecimal amount) {
-        if (account == null || amount == null)
-            return DepositStatus.INVALID_ARGUMENTS;
-
-        if (amount.compareTo(BigDecimal.ZERO) <= 0)
-            return DepositStatus.INVALID_AMOUNT;
-
-        account.deposit(amount);
-
-        accountDAO.update(account);
-        var transaction = account.getTransactions().get(account.getTransactions().size() - 1);
-        transactionDAO.save(transaction);
-
-        return DepositStatus.OK;
-    }
-
-    public enum WithdrawalStatus {
-        OK,
-        INVALID_AMOUNT,
-        INSUFFICIENT_FUNDS,
-        INVALID_ARGUMENTS
-    }
-
-    public WithdrawalStatus withdraw(Account account, BigDecimal amount) {
-        if (account == null || amount == null)
-            return WithdrawalStatus.INVALID_ARGUMENTS;
-
-        if (amount.compareTo(BigDecimal.ZERO) <= 0)
-            return WithdrawalStatus.INVALID_AMOUNT;
-
-        if (account.getBalance().compareTo(amount) < 0)
-            return WithdrawalStatus.INSUFFICIENT_FUNDS;
-
-        account.withdraw(amount);
-
-        accountDAO.update(account);
-        var transaction = account.getTransactions().get(account.getTransactions().size() - 1);
-        transactionDAO.save(transaction);
-
-        return WithdrawalStatus.OK;
-    }
-
-    public enum TransferalStatus {
-        OK,
-        SIMILAR_ACCOUNTS,
-        ACCOUNT_NOT_FOUND,
-        INVALID_AMOUNT,
-        INSUFFICIENT_FUNDS,
-        INVALID_ARGUMENTS
-    }
-
-    public TransferalStatus transfer(Account sender, int receivingAccountNumber, BigDecimal amount) {
-        if (sender == null || amount == null)
-            return TransferalStatus.INVALID_ARGUMENTS;
-
-        if (amount.compareTo(BigDecimal.ZERO) <= 0)
-            return TransferalStatus.INVALID_AMOUNT;
-
-        if (sender.getBalance().compareTo(amount) < 0)
-            return TransferalStatus.INSUFFICIENT_FUNDS;
-
-        Account receiver = accountDAO.getAccountOf(receivingAccountNumber);
-        if (receiver == null)
-            return TransferalStatus.ACCOUNT_NOT_FOUND;
-
-        if (sender.getNumber() == receiver.getNumber())
-            return TransferalStatus.SIMILAR_ACCOUNTS;
-
-        sender.transfer(receiver, amount);
-        var transactionDebit = sender.getTransactions().get(sender.getTransactions().size() - 1);
-        transactionDAO.save(transactionDebit);
-
-        var transactionCredit = Transaction.create(Transaction.NEW_ID, LocalDateTime.now(), "Transfer", amount, receiver);
-        transactionDAO.save(transactionCredit);
-
-        accountDAO.update(sender);
-        accountDAO.update(receiver);
-
-        return TransferalStatus.OK;
-    }
-
-    public enum DeletionStatus {
-        OK,
-        INVALID_ARGUMENTS
-    }
-
-    public DeletionStatus delete(Account account) {
-        if (account == null) {
-            return DeletionStatus.INVALID_ARGUMENTS;
-        }
-
-        accountDAO.delete(account);
-
-        return DeletionStatus.OK;
+    public AccountService(AccountDAO accountDAO) {
+        this.accountDAO = Objects.requireNonNull(accountDAO);
     }
 
     private final AccountDAO accountDAO;
-    private final TransactionDAO transactionDAO;
-
-
-    private AccountService(AccountDAO accountDAO,
-                           TransactionDAO transactionDAO) {
-        this.accountDAO = accountDAO;
-        this.transactionDAO = transactionDAO;
-    }
 }
