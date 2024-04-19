@@ -6,19 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class CustomerManagement0 {
+public class CustomerManagement {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public CustomerManagement0(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public CustomerManagement(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         changeCredentialsButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_MANAGEMENT_1);
+            JPanel cards = (JPanel) bankSys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.LOGIN_MANAGEMENT);
         });
 
         saveNewProfileButton.addActionListener(e -> {
@@ -30,12 +30,12 @@ public class CustomerManagement0 {
         });
 
         cancelButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_ACCOUNTS);
+            JPanel cards = (JPanel) bankSys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNTS);
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField firstnameField;

@@ -22,20 +22,12 @@ public final class TransactionDAO {
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                return new Transaction(
-                        rs.getLong("transaction_id"),
-                        transaction.transactionType(),
-                        transaction.amount(),
-                        transaction.description(),
-                        rs.getTimestamp("created_at").toLocalDateTime(),
-                        transaction.accountId(),
-                        transaction.fromAccountId(),
-                        transaction.toAccountId());
+                return getTransactionById(rs.getLong(1));
             return null;
         }
     }
 
-    public Transaction getTransactionById(Long id) throws SQLException {
+    public Transaction getTransactionById(long id) throws SQLException {
         String sql = "SELECT * FROM Transaction WHERE transaction_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);

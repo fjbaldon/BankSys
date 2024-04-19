@@ -9,15 +9,15 @@ import java.util.Objects;
 public class AccountManagement {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public AccountManagement(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public AccountManagement(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         backButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_ACTIVITIES);
         });
 
@@ -26,7 +26,7 @@ public class AccountManagement {
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField accountNumberField;

@@ -7,15 +7,15 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.util.Objects;
 
-public class CustomerManagement1 {
+public class LoginManagement {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public CustomerManagement1(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public LoginManagement(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         showPasswordBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -38,12 +38,12 @@ public class CustomerManagement1 {
         });
 
         cancelButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_ACCOUNTS);
+            JPanel cards = (JPanel) bankSys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNTS);
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField usernameField;

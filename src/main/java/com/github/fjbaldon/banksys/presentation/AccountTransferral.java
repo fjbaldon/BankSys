@@ -9,15 +9,15 @@ import java.util.Objects;
 public class AccountTransferral {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public AccountTransferral(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public AccountTransferral(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         backButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_ACTIVITIES);
         });
 
@@ -26,7 +26,7 @@ public class AccountTransferral {
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField accountNumberField;

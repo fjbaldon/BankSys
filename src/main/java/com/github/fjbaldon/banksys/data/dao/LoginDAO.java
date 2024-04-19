@@ -18,13 +18,7 @@ public final class LoginDAO {
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                return new Login(
-                        rs.getLong("login_id"),
-                        login.username(),
-                        login.passwordHash(),
-                        rs.getTimestamp("created_at").toLocalDateTime(),
-                        rs.getTimestamp("updated_at").toLocalDateTime(),
-                        login.customerId());
+                return getLoginById(rs.getLong(1));
             return null;
         }
     }

@@ -16,32 +16,33 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public final class BankSys {
+public final class BankSys extends JFrame {
+
+    public LoginService getLoginService() {
+        return loginService;
+    }
+
+    public CustomerService getCustomerService() {
+        return customerService;
+    }
+
+    public AccountService accountService() {
+        return accountService;
+    }
+
+    public TransactionService transactionService() {
+        return transactionService;
+    }
 
     public BankSys() {
-        frame.setTitle("BankSys - Banking System");
-        frame.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("./icon.png"))).getImage());
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setContentPane(cards);
-        frame.setLocationRelativeTo(null);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
-
-        cards.add(new CustomerLogin(frame).panel, PanelNames.CUSTOMER_LOGIN);
-        cards.add(new CustomerCreation0(frame).panel, PanelNames.CUSTOMER_CREATION_0);
-        cards.add(new CustomerCreation1(frame).panel, PanelNames.CUSTOMER_CREATION_1);
-        cards.add(new CustomerAccounts(frame).panel, PanelNames.CUSTOMER_ACCOUNTS);
-        cards.add(new CustomerManagement0(frame).panel, PanelNames.CUSTOMER_MANAGEMENT_0);
-        cards.add(new CustomerManagement1(frame).panel, PanelNames.CUSTOMER_MANAGEMENT_1);
-        cards.add(new AccountCreation(frame).panel, PanelNames.ACCOUNT_CREATION);
-        cards.add(new AccountActivities(frame).panel, PanelNames.ACCOUNT_ACTIVITIES);
-        cards.add(new AccountDeposit(frame).panel, PanelNames.ACCOUNT_DEPOSIT);
-        cards.add(new AccountWithdrawal(frame).panel, PanelNames.ACCOUNT_WITHDRAWAL);
-        cards.add(new AccountTransferral(frame).panel, PanelNames.ACCOUNT_TRANSFERRAL);
-        cards.add(new AccountHistory(frame).panel, PanelNames.ACCOUNT_HISTORY);
-        cards.add(new AccountManagement(frame).panel, PanelNames.ACCOUNT_MANAGEMENT);
-
-        ((CardLayout) cards.getLayout()).show(cards, "loginPanel");
+        JPanel cards = new JPanel(new CardLayout());
+        setContentPane(cards);
+        setTitle("BankSys - Banking System");
+        setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("./icon.png"))).getImage());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(800, 600);
+        setVisible(true);
 
         try {
             loginDAO = new LoginDAO(ConnectionManager.getConnection());
@@ -56,10 +57,37 @@ public final class BankSys {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
 
-    private final JFrame frame = new JFrame();
-    private final JPanel cards = new JPanel(new CardLayout());
+        LogIn logIn = new LogIn(this);
+        LoginCreation loginCreation = new LoginCreation(this, logIn);
+        CustomerCreation customerCreation = new CustomerCreation(this, loginCreation, logIn);
+        Accounts accounts = new Accounts(this, logIn);
+        CustomerManagement customerManagement = new CustomerManagement(this);
+        LoginManagement loginManagement = new LoginManagement(this);
+        AccountCreation accountCreation = new AccountCreation(this);
+        AccountActivities accountActivities = new AccountActivities(this);
+        AccountDeposit accountDeposit = new AccountDeposit(this);
+        AccountWithdrawal accountWithdrawal = new AccountWithdrawal(this);
+        AccountTransferral accountTransferral = new AccountTransferral(this);
+        AccountHistory accountHistory = new AccountHistory(this);
+        AccountManagement accountManagement = new AccountManagement(this);
+
+        cards.add(logIn.panel, PanelNames.LOGIN);
+        cards.add(loginCreation.panel, PanelNames.LOGIN_CREATION);
+        cards.add(customerCreation.panel, PanelNames.CUSTOMER_CREATION);
+        cards.add(accounts.panel, PanelNames.ACCOUNTS);
+        cards.add(customerManagement.panel, PanelNames.CUSTOMER_MANAGEMENT);
+        cards.add(loginManagement.panel, PanelNames.LOGIN_MANAGEMENT);
+        cards.add(accountCreation.panel, PanelNames.ACCOUNT_CREATION);
+        cards.add(accountActivities.panel, PanelNames.ACCOUNT_ACTIVITIES);
+        cards.add(accountDeposit.panel, PanelNames.ACCOUNT_DEPOSIT);
+        cards.add(accountWithdrawal.panel, PanelNames.ACCOUNT_WITHDRAWAL);
+        cards.add(accountTransferral.panel, PanelNames.ACCOUNT_TRANSFERRAL);
+        cards.add(accountHistory.panel, PanelNames.ACCOUNT_HISTORY);
+        cards.add(accountManagement.panel, PanelNames.ACCOUNT_MANAGEMENT);
+
+        ((CardLayout) cards.getLayout()).show(cards, "loginPanel");
+    }
 
     private final LoginDAO loginDAO;
     private final CustomerDAO customerDAO;

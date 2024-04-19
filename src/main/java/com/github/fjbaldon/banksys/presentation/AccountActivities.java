@@ -9,45 +9,45 @@ import java.util.Objects;
 public class AccountActivities {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public AccountActivities(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public AccountActivities(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         backButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_ACCOUNTS);
+            JPanel cards = (JPanel) bankSys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNTS);
         });
 
         makeADepositButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_DEPOSIT);
         });
 
         makeAWithdrawalButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_WITHDRAWAL);
         });
 
         transferFundsButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_TRANSFERRAL);
         });
 
         transactionHistoryButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_HISTORY);
         });
 
         manageAccountButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_MANAGEMENT);
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField accountNumberField;

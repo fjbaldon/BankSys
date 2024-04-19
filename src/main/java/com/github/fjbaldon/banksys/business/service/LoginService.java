@@ -18,6 +18,10 @@ public final class LoginService {
             return null;
     }
 
+    public boolean usernameExists(String username) throws SQLException {
+        return loginDAO.getLoginByUsername(username) != null;
+    }
+
     public Login createLogin(String username, String password, Customer customer) throws SQLException {
         Login newLogin = new Login.Builder()
                 .username(username)

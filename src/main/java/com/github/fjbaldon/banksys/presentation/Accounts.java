@@ -6,40 +6,44 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class CustomerAccounts {
+public class Accounts {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        banksys.setContentPane(panel);
+        banksys.revalidate();
     }
 
-    public CustomerAccounts(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public Accounts(BankSys banksys, LogIn logIn) {
+        this.banksys = Objects.requireNonNull(banksys);
 
         manageProfileButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_MANAGEMENT_0);
+            // TODO
+
+            JPanel cards = (JPanel) banksys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_MANAGEMENT);
         });
         
         logOutButton.addActionListener(e -> {
-            // TODO
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_LOGIN);
+            logIn.clearLogInInfo();
+
+            JPanel cards = (JPanel) banksys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.LOGIN);
         });
         
         openAccountButton.addActionListener(e -> {
             // TODO
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) banksys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_ACTIVITIES);
         });
         
         createNewAccountButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            // TODO
+            JPanel cards = (JPanel) banksys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_CREATION);
         });
     }
 
-    private final JFrame frame;
+    private final BankSys banksys;
 
     public JPanel panel;
     private JButton manageProfileButton;

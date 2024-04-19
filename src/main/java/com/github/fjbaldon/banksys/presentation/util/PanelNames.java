@@ -1,12 +1,12 @@
 package com.github.fjbaldon.banksys.presentation.util;
 
 public interface PanelNames {
-    String CUSTOMER_LOGIN = "customerLogin";
-    String CUSTOMER_CREATION_0 = "customerCreation0";
-    String CUSTOMER_CREATION_1 = "customerCreation1";
-    String CUSTOMER_ACCOUNTS = "customerAccounts";
-    String CUSTOMER_MANAGEMENT_0 = "customerManagement0";
-    String CUSTOMER_MANAGEMENT_1 = "customerManagement1";
+    String LOGIN = "login";
+    String CUSTOMER_CREATION = "customerCreation";
+    String LOGIN_CREATION = "loginCreation";
+    String ACCOUNTS = "accounts";
+    String CUSTOMER_MANAGEMENT = "customerManagement";
+    String LOGIN_MANAGEMENT = "loginManagement";
     String ACCOUNT_CREATION = "accountCreation";
     String ACCOUNT_ACTIVITIES = "accountActivities";
     String ACCOUNT_DEPOSIT = "accountDeposit";

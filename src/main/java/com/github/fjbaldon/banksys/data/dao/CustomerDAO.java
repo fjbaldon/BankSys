@@ -23,17 +23,7 @@ public final class CustomerDAO {
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                return new Customer(
-                        rs.getLong(1),
-                        customer.firstName(),
-                        customer.lastName(),
-                        customer.middleInitial(),
-                        customer.dateOfBirth(),
-                        customer.email(),
-                        customer.phoneNumber(),
-                        customer.address(),
-                        rs.getTimestamp("created_at").toLocalDateTime(),
-                        rs.getTimestamp("updated_at").toLocalDateTime());
+                return getCustomerById(rs.getLong(1));
             return null;
         }
     }

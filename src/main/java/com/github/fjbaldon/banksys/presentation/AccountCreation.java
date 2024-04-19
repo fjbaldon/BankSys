@@ -8,12 +8,12 @@ import java.util.Objects;
 
 public class AccountCreation {
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public AccountCreation(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public AccountCreation(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         generateButton.addActionListener(e -> {
             // TODO
@@ -24,12 +24,12 @@ public class AccountCreation {
         });
 
         backButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
-            ((CardLayout) cards.getLayout()).show(cards, PanelNames.CUSTOMER_ACCOUNTS);
+            JPanel cards = (JPanel) bankSys.getContentPane();
+            ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNTS);
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField accountNumberField;

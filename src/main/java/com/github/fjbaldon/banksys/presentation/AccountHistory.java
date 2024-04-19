@@ -9,20 +9,20 @@ import java.util.Objects;
 public class AccountHistory {
 
     public void show() {
-        frame.setContentPane(panel);
-        frame.revalidate();
+        bankSys.setContentPane(panel);
+        bankSys.revalidate();
     }
 
-    public AccountHistory(JFrame frame) {
-        this.frame = Objects.requireNonNull(frame);
+    public AccountHistory(BankSys bankSys) {
+        this.bankSys = Objects.requireNonNull(bankSys);
 
         backButton.addActionListener(e -> {
-            JPanel cards = (JPanel) frame.getContentPane();
+            JPanel cards = (JPanel) bankSys.getContentPane();
             ((CardLayout) cards.getLayout()).show(cards, PanelNames.ACCOUNT_ACTIVITIES);
         });
     }
 
-    private final JFrame frame;
+    private final BankSys bankSys;
 
     public JPanel panel;
     private JTextField accountNumberField;

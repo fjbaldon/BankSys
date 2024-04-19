@@ -21,15 +21,7 @@ public final class AccountDAO {
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
-                return new Account(
-                        rs.getLong("account_id"),
-                        account.accountNumber(),
-                        account.accountType(),
-                        account.balance(),
-                        account.interestRate(),
-                        rs.getTimestamp("created_at").toLocalDateTime(),
-                        rs.getTimestamp("updated_at").toLocalDateTime(),
-                        account.customerId());
+                return getAccountById(rs.getLong(1));
             return null;
         }
     }
