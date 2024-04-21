@@ -4,70 +4,122 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * @param interestRate Can be null for non-interest-bearing accounts
- */
-public record Account(Long accountId, String accountNumber, AccountType accountType, BigDecimal balance,
-                      BigDecimal interestRate, LocalDateTime createdAt, LocalDateTime updatedAt, Long customerId) {
+public final class Account {
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(accountId, account.accountId) && Objects.equals(accountNumber, account.accountNumber) && accountType == account.accountType && Objects.equals(balance, account.balance) && Objects.equals(interestRate, account.interestRate) && Objects.equals(createdAt, account.createdAt) && Objects.equals(updatedAt, account.updatedAt) && Objects.equals(customerId, account.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId, accountNumber, accountType, balance, interestRate, createdAt, updatedAt, customerId);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", accountType=" + accountType +
+                ", balance=" + balance +
+                ", interestRate=" + interestRate +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", customerId=" + customerId +
+                '}';
+    }
+
+    private Long accountId;
+    private String accountNumber;
+    private AccountType accountType;
+    private BigDecimal balance;
+    private BigDecimal interestRate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Long customerId;
+
+    /**
+     * @param interestRate Can be null for non-interest-bearing accounts
+     */
+    public Account(Long accountId, String accountNumber, AccountType accountType, BigDecimal balance,
+                   BigDecimal interestRate, LocalDateTime createdAt, LocalDateTime updatedAt, Long customerId) {
+        this.accountId = accountId;
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+        this.balance = balance;
+        this.interestRate = interestRate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.customerId = customerId;
+    }
 
     public enum AccountType {
         CHECKING,
         SAVINGS,
         LOAN
-    }
-
-    public static class Builder {
-        private Long accountId;
-        private String accountNumber;
-        private AccountType accountType;
-        private BigDecimal balance;
-        private BigDecimal interestRate;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private Long customerId;
-
-        public Builder accountId(Long accountId) {
-            this.accountId = Objects.requireNonNull(accountId);
-            return this;
-        }
-
-        public Builder accountNumber(String accountNumber) {
-            this.accountNumber = Objects.requireNonNull(accountNumber);
-            return this;
-        }
-
-        public Builder accountType(AccountType accountType) {
-            this.accountType = Objects.requireNonNull(accountType);
-            return this;
-        }
-
-        public Builder balance(BigDecimal balance) {
-            this.balance = Objects.requireNonNull(balance);
-            return this;
-        }
-
-        public Builder interestRate(BigDecimal interestRate) {
-            this.interestRate = Objects.requireNonNull(interestRate);
-            return this;
-        }
-
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt);
-            return this;
-        }
-
-        public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = Objects.requireNonNull(updatedAt);
-            return this;
-        }
-
-        public Builder customerId(Long customerId) {
-            this.customerId = Objects.requireNonNull(customerId);
-            return this;
-        }
-
-        public Account build() {
-            return new Account(accountId, accountNumber, accountType, balance, interestRate, createdAt, updatedAt, customerId);
-        }
     }
 }

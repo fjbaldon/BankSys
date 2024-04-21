@@ -5,39 +5,39 @@ import com.github.fjbaldon.banksys.data.dao.CustomerDAO;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.Optional;
 
-public final class CustomerService {
+public enum CustomerService {
 
-    public Customer createCustomer(String firstName, String lastName, String middleInitial, LocalDate dateOfBirth,
-                                   String email, String phoneNumber, String address) throws SQLException {
-        Customer customer = new Customer.Builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .middleInitial(middleInitial)
-                .dateOfBirth(dateOfBirth)
-                .email(email)
-                .phoneNumber(phoneNumber)
-                .address(address)
-                .build();
-        return customerDAO.createCustomer(customer);
+    INSTANCE;
+    private final CustomerDAO customerDAO = CustomerDAO.INSTANCE;
+
+    public void createCustomer(String firstName, String lastName, String middleInitial, LocalDate dateOfBirth,
+                                   String email, String phoneNumber, String address) {
+            Customer customer = new Customer(
+                    null,
+                    firstName,
+                    lastName,
+                    middleInitial,
+                    dateOfBirth,
+                    email,
+                    phoneNumber,
+                    address,
+                    null,
+                    null
+            );
+            customerDAO.createCustomer(customer);
     }
 
-    public Customer getCustomerById(Long customerId) throws SQLException {
-        return customerDAO.getCustomerById(customerId);
+    public Optional<Customer> getCustomerByEmail(String email) {
+        return customerDAO.getCustomerByEmail(email);
     }
 
-    public void updateCustomer(Customer customer) throws SQLException {
+    public void updateCustomer(Customer customer) {
         customerDAO.updateCustomer(customer);
     }
 
-    public void deleteCustomer(Customer customer) throws SQLException {
+    public void deleteCustomer(Customer customer) {
         customerDAO.deleteCustomer(customer);
-    }
-
-    private final CustomerDAO customerDAO;
-
-    public CustomerService(CustomerDAO customerDAO) {
-        this.customerDAO = Objects.requireNonNull(customerDAO);
     }
 }

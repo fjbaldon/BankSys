@@ -3,52 +3,94 @@ package com.github.fjbaldon.banksys.business.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * @param passwordHash Store hashed password, not plain text
- */
-public record Login(Long loginId, String username, String passwordHash, LocalDateTime createdAt,
-                    LocalDateTime updatedAt, Long customerId) {
+public final class Login {
 
-    public static class Builder {
-        private Long loginId;
-        private String username;
-        private String passwordHash; // Enforce hashed password storage
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-        private Long customerId;
+    public Long getLoginId() {
+        return loginId;
+    }
 
-        public Builder loginId(Long loginId) {
-            this.loginId = Objects.requireNonNull(loginId);
-            return this;
-        }
+    public String getUsername() {
+        return username;
+    }
 
-        public Builder username(String username) {
-            this.username = Objects.requireNonNull(username);
-            return this;
-        }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-        public Builder passwordHash(String passwordHash) {
-            this.passwordHash = Objects.requireNonNull(passwordHash);
-            return this;
-        }
+    public String getPasswordHash() {
+        return passwordHash;
+    }
 
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt);
-            return this;
-        }
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
-        public Builder updatedAt(LocalDateTime updatedAt) {
-            this.updatedAt = Objects.requireNonNull(updatedAt);
-            return this;
-        }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-        public Builder customerId(Long customerId) {
-            this.customerId = Objects.requireNonNull(customerId);
-            return this;
-        }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
-        public Login build() {
-            return new Login(loginId, username, passwordHash, createdAt, updatedAt, customerId);
-        }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Login login = (Login) o;
+        return Objects.equals(loginId, login.loginId) && Objects.equals(username, login.username) && Objects.equals(passwordHash, login.passwordHash) && Objects.equals(createdAt, login.createdAt) && Objects.equals(updatedAt, login.updatedAt) && Objects.equals(customerId, login.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(loginId, username, passwordHash, createdAt, updatedAt, customerId);
+    }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "loginId=" + loginId +
+                ", username='" + username + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", customerId=" + customerId +
+                '}';
+    }
+
+    private Long loginId;
+    private String username;
+    private String passwordHash;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Long customerId;
+
+    /**
+     * @param passwordHash Store hashed password, not plain text
+     */
+    public Login(Long loginId, String username, String passwordHash, LocalDateTime createdAt,
+                 LocalDateTime updatedAt, Long customerId) {
+        this.loginId = loginId;
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.customerId = customerId;
     }
 }

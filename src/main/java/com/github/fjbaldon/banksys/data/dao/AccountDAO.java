@@ -1,38 +1,42 @@
 package com.github.fjbaldon.banksys.data.dao;
 
 import com.github.fjbaldon.banksys.business.model.Account;
+import com.github.fjbaldon.banksys.data.connection.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
-public final class AccountDAO {
+public enum AccountDAO {
 
-    public Account createAccount(Account account) throws SQLException {
+    INSTANCE;
+    private final ConnectionManager connectionManager = ConnectionManager.INSTANCE;
+
+    public void createAccount(Account account) {
         String sql = "INSERT INTO Account (account_number, account_type, balance, interest_rate, customer_id) " +
                 "VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, account.accountNumber());
-            stmt.setString(2, account.accountType().toString());
-            stmt.setBigDecimal(3, account.balance());
-            stmt.setBigDecimal(4, account.interestRate());  // Assuming interest_rate is BigDecimal
-            stmt.setLong(5, account.customerId());
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getAccountNumber());
+            stmt.setString(2, account.getAccountType().toString());
+            stmt.setBigDecimal(3, account.getBalance());
+            stmt.setBigDecimal(4, account.getInterestRate());  // Assuming interest_rate is BigDecimal
+            stmt.setLong(5, account.getCustomerId());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                return getAccountById(rs.getLong(1));
-            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public Account getAccountById(Long id) throws SQLException {
+    public Optional<Account> getAccountById(long id) {
         String sql = "SELECT * FROM Account WHERE account_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
-                return new Account(
+                return Optional.of(new Account(
                         rs.getLong("account_id"),
                         rs.getString("account_number"),
                         Account.AccountType.valueOf(rs.getString("account_type")),
@@ -40,15 +44,42 @@ public final class AccountDAO {
                         rs.getBigDecimal("interest_rate"),  // Assuming interest_rate is BigDecimal
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        rs.getLong("customer_id"));
+                        rs.getLong("customer_id")
+                ));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
-    public List<Account> getAccounts() throws SQLException {
+    public Optional<Account> getAccountByNumber(String accountNumber) {
+        String sql = "SELECT * FROM Account WHERE account_id = ?";
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, accountNumber);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return Optional.of(new Account(
+                        rs.getLong("account_id"),
+                        rs.getString("account_number"),
+                        Account.AccountType.valueOf(rs.getString("account_type")),
+                        rs.getBigDecimal("balance"),
+                        rs.getBigDecimal("interest_rate"),  // Assuming interest_rate is BigDecimal
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getLong("customer_id")
+                ));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Account> getAccounts() {
         String sql = "SELECT * FROM Account";
         List<Account> accounts = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 accounts.add(new Account(
@@ -60,34 +91,36 @@ public final class AccountDAO {
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
                         rs.getLong("customer_id")));
+            return accounts;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return accounts;
     }
 
-    public void updateAccount(Account account) throws SQLException {
+    public void updateAccount(Account account) {
         String sql = "UPDATE Account SET account_number = ?, account_type = ?, balance = ?, interest_rate = ?, customer_id = ? WHERE account_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, account.accountNumber());
-            stmt.setString(2, account.accountType().toString());
-            stmt.setBigDecimal(3, account.balance());
-            stmt.setBigDecimal(4, account.interestRate());  // Assuming interest_rate is BigDecimal
-            stmt.setLong(5, account.customerId());
-            stmt.setLong(6, account.customerId());
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getAccountNumber());
+            stmt.setString(2, account.getAccountType().toString());
+            stmt.setBigDecimal(3, account.getBalance());
+            stmt.setBigDecimal(4, account.getInterestRate());  // Assuming interest_rate is BigDecimal
+            stmt.setLong(5, account.getCustomerId());
+            stmt.setLong(6, account.getCustomerId());
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void deleteAccount(Account account) throws SQLException {
+    public void deleteAccount(Account account) {
         String sql = "DELETE FROM Account WHERE account_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, account.accountId());
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, account.getAccountId());
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-
-    public AccountDAO(Connection connection) {
-        this.connection = Objects.requireNonNull(connection);
-    }
-
-    private final Connection connection;
 }

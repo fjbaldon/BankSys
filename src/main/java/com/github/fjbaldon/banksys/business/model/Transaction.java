@@ -4,12 +4,119 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * @param fromAccountId Can be null for non-transfer transactions
- * @param toAccountId   Can be null for non-transfer transactions
- */
-public record Transaction(Long transactionId, TransactionType transactionType, BigDecimal amount, String description,
-                          LocalDateTime createdAt, Long accountId, Long fromAccountId, Long toAccountId) {
+public final class Transaction {
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public Long getFromAccountId() {
+        return fromAccountId;
+    }
+
+    public void setFromAccountId(Long fromAccountId) {
+        this.fromAccountId = fromAccountId;
+    }
+
+    public Long getToAccountId() {
+        return toAccountId;
+    }
+
+    public void setToAccountId(Long toAccountId) {
+        this.toAccountId = toAccountId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return Objects.equals(transactionId, that.transactionId) && transactionType == that.transactionType && Objects.equals(amount, that.amount) && Objects.equals(description, that.description) && Objects.equals(createdAt, that.createdAt) && Objects.equals(accountId, that.accountId) && Objects.equals(fromAccountId, that.fromAccountId) && Objects.equals(toAccountId, that.toAccountId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transactionId, transactionType, amount, description, createdAt, accountId, fromAccountId, toAccountId);
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", transactionType=" + transactionType +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                ", accountId=" + accountId +
+                ", fromAccountId=" + fromAccountId +
+                ", toAccountId=" + toAccountId +
+                '}';
+    }
+
+    private Long transactionId;
+    private TransactionType transactionType;
+    private BigDecimal amount;
+    private String description;
+    private LocalDateTime createdAt;
+    private Long accountId;
+    private Long fromAccountId;
+    private Long toAccountId;
+
+    /**
+     * @param fromAccountId Can be null for non-transfer transactions
+     * @param toAccountId   Can be null for non-transfer transactions
+     */
+    public Transaction(Long transactionId, TransactionType transactionType, BigDecimal amount, String description,
+                       LocalDateTime createdAt, Long accountId, Long fromAccountId, Long toAccountId) {
+        this.transactionId = transactionId;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.accountId = accountId;
+        this.fromAccountId = fromAccountId;
+        this.toAccountId = toAccountId;
+    }
 
     public enum TransactionType {
         DEPOSIT,
@@ -17,60 +124,5 @@ public record Transaction(Long transactionId, TransactionType transactionType, B
         TRANSFER,
         PAYMENT,
         FEE
-    }
-
-    public static class Builder {
-        private Long transactionId;
-        private TransactionType transactionType;
-        private BigDecimal amount;
-        private String description;
-        private LocalDateTime createdAt;
-        private Long accountId;
-        private Long fromAccountId;
-        private Long toAccountId;
-
-        public Builder transactionId(Long transactionId) {
-            this.transactionId = Objects.requireNonNull(transactionId);
-            return this;
-        }
-
-        public Builder transactionType(TransactionType transactionType) {
-            this.transactionType = Objects.requireNonNull(transactionType);
-            return this;
-        }
-
-        public Builder amount(BigDecimal amount) {
-            this.amount = Objects.requireNonNull(amount);
-            return this;
-        }
-
-        public Builder description(String description) {
-            this.description = Objects.requireNonNull(description);
-            return this;
-        }
-
-        public Builder createdAt(LocalDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt);
-            return this;
-        }
-
-        public Builder accountId(Long accountId) {
-            this.accountId = Objects.requireNonNull(accountId);
-            return this;
-        }
-
-        public Builder fromAccountId(Long fromAccountId) {
-            this.fromAccountId = Objects.requireNonNull(fromAccountId);
-            return this;
-        }
-
-        public Builder toAccountId(Long toAccountId) {
-            this.toAccountId = Objects.requireNonNull(toAccountId);
-            return this;
-        }
-
-        public Transaction build() {
-            return new Transaction(transactionId, transactionType, amount, description, createdAt, accountId, fromAccountId, toAccountId);
-        }
     }
 }

@@ -32,7 +32,7 @@ mvn clean package
 
 ### Running the Application
 
-Run the application using the generated JAR file:
+Run the desktopView using the generated JAR file:
 
 ```bash
 java -jar target/BankSys-0.1.jar
