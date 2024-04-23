@@ -3,7 +3,6 @@ package com.github.fjbaldon.banksys.data.dao;
 import com.github.fjbaldon.banksys.business.model.Customer;
 import com.github.fjbaldon.banksys.data.connection.ConnectionManager;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +31,8 @@ public enum CustomerDAO {
         }
     }
 
-    public Optional<Customer> getCustomerById(long id) {
-        String sql = "SELECT * FROM Customer WHERE customer_id = ?";
+    public Optional<Customer> getCustomerById(Long id) {
+        String sql = "SELECT * FROM Customer WHERE customer_id = ? AND is_deleted = FALSE";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -49,7 +48,8 @@ public enum CustomerDAO {
                         rs.getString("phone_number"),
                         rs.getString("address"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
-                        rs.getTimestamp("updated_at").toLocalDateTime()
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getBoolean("is_deleted")
                 ));
             return Optional.empty();
         } catch (SQLException e) {
@@ -58,7 +58,7 @@ public enum CustomerDAO {
     }
 
     public Optional<Customer> getCustomerByEmail(String email) {
-        String sql = "SELECT * FROM Customer WHERE email = ?";
+        String sql = "SELECT * FROM Customer WHERE email = ? AND is_deleted = FALSE";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -74,7 +74,62 @@ public enum CustomerDAO {
                         rs.getString("phone_number"),
                         rs.getString("address"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
-                        rs.getTimestamp("updated_at").toLocalDateTime()
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getBoolean("is_deleted")
+                ));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<Customer> getCustomerByPhoneNumber(String phoneNumber) {
+        String sql = "SELECT * FROM Customer WHERE phone_number = ? AND is_deleted = FALSE";
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, phoneNumber);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return Optional.of(new Customer(
+                        rs.getLong("customer_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("middle_initial"),
+                        rs.getDate("date_of_birth").toLocalDate(),
+                        rs.getString("email"),
+                        rs.getString("phone_number"),
+                        rs.getString("address"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getBoolean("is_deleted")
+                ));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<Customer> getCustomerByAccountNumber(String accountNumber) {
+        String sql = "SELECT c.* FROM Customer c " +
+                "INNER JOIN Account a ON c.customer_id = a.customer_id " +
+                "WHERE a.account_number = ? AND c.is_deleted = FALSE";
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, accountNumber);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return Optional.of(new Customer(
+                        rs.getLong("customer_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("middle_initial"),
+                        rs.getDate("date_of_birth").toLocalDate(),
+                        rs.getString("email"),
+                        rs.getString("phone_number"),
+                        rs.getString("address"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getBoolean("is_deleted")
                 ));
             return Optional.empty();
         } catch (SQLException e) {
@@ -83,7 +138,7 @@ public enum CustomerDAO {
     }
 
     public List<Customer> getCustomers() {
-        String sql = "SELECT * FROM Customer";
+        String sql = "SELECT * FROM Customer WHERE is_deleted = FALSE";
         List<Customer> customers = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -99,7 +154,9 @@ public enum CustomerDAO {
                         rs.getString("phone_number"),
                         rs.getString("address"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
-                        rs.getTimestamp("updated_at").toLocalDateTime()));
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getBoolean("is_deleted")
+                ));
             return customers;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -113,7 +170,7 @@ public enum CustomerDAO {
             stmt.setString(1, customer.getFirstName());
             stmt.setString(2, customer.getLastName());
             stmt.setString(3, customer.getMiddleInitial());
-            stmt.setDate(4, java.sql.Date.valueOf(customer.getDateOfBirth()));  // Convert Java Date to SQL Date
+            stmt.setDate(4, java.sql.Date.valueOf(customer.getDateOfBirth()));
             stmt.setString(5, customer.getEmail());
             stmt.setString(6, customer.getPhoneNumber());
             stmt.setString(7, customer.getAddress());
@@ -124,11 +181,11 @@ public enum CustomerDAO {
         }
     }
 
-    public void deleteCustomer(Customer customer) {
-        String sql = "DELETE FROM Customer WHERE customer_id = ?";
+    public void deleteCustomerById(Long id) {
+        String sql = "UPDATE Customer SET is_deleted = TRUE WHERE customer_id = ?";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, customer.getCustomerId());
+            stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

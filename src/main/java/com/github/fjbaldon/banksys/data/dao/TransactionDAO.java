@@ -1,6 +1,5 @@
 package com.github.fjbaldon.banksys.data.dao;
 
-import com.github.fjbaldon.banksys.business.model.Account;
 import com.github.fjbaldon.banksys.business.model.Transaction;
 import com.github.fjbaldon.banksys.data.connection.ConnectionManager;
 
@@ -23,15 +22,15 @@ public enum TransactionDAO {
             stmt.setBigDecimal(2, transaction.getAmount());
             stmt.setString(3, transaction.getDescription());
             stmt.setLong(4, transaction.getAccountId());
-            stmt.setLong(5, transaction.getFromAccountId());
-            stmt.setLong(6, transaction.getToAccountId());
+            stmt.setObject(5, transaction.getFromAccountId(), java.sql.Types.BIGINT);
+            stmt.setObject(6, transaction.getToAccountId(), java.sql.Types.BIGINT);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Optional<Transaction> getTransactionById(long id) {
+    public Optional<Transaction> getTransactionById(Long id) {
         String sql = "SELECT * FROM Transaction WHERE transaction_id = ?";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -46,7 +45,8 @@ public enum TransactionDAO {
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getLong("account_id"),
                         rs.getLong("from_account_id"),
-                        rs.getLong("to_account_id")
+                        rs.getLong("to_account_id"),
+                        rs.getBoolean("is_deleted")
                 ));
             return Optional.empty();
         } catch (SQLException e) {
@@ -54,11 +54,12 @@ public enum TransactionDAO {
         }
     }
 
-    public List<Transaction> getTransactionsByAccount(Account account) {
+    public List<Transaction> getTransactionsByAccountId(Long accountId) {
         String sql = "SELECT * FROM Transaction WHERE account_id = ?";
         List<Transaction> transactions = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, accountId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 transactions.add(new Transaction(
@@ -69,7 +70,58 @@ public enum TransactionDAO {
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getLong("account_id"),
                         rs.getLong("from_account_id"),
-                        rs.getLong("to_account_id")
+                        rs.getLong("to_account_id"),
+                        rs.getBoolean("is_deleted")
+                ));
+            return transactions;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Transaction> getTransactionsByFromAccountId(Long fromAccountId) {
+        String sql = "SELECT * FROM Transaction WHERE from_account_id = ?";
+        List<Transaction> transactions = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, fromAccountId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                transactions.add(new Transaction(
+                        rs.getLong("transaction_id"),
+                        Transaction.TransactionType.valueOf(rs.getString("transaction_type")),
+                        rs.getBigDecimal("amount"),
+                        rs.getString("description"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getLong("account_id"),
+                        rs.getLong("from_account_id"),
+                        rs.getLong("to_account_id"),
+                        rs.getBoolean("is_deleted")
+                ));
+            return transactions;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Transaction> getTransactionsByToAccountId(Long toAccountId) {
+        String sql = "SELECT * FROM Transaction WHERE to_account_id = ?";
+        List<Transaction> transactions = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, toAccountId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                transactions.add(new Transaction(
+                        rs.getLong("transaction_id"),
+                        Transaction.TransactionType.valueOf(rs.getString("transaction_type")),
+                        rs.getBigDecimal("amount"),
+                        rs.getString("description"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getLong("account_id"),
+                        rs.getLong("from_account_id"),
+                        rs.getLong("to_account_id"),
+                        rs.getBoolean("is_deleted")
                 ));
             return transactions;
         } catch (SQLException e) {
@@ -92,7 +144,8 @@ public enum TransactionDAO {
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getLong("account_id"),
                         rs.getLong("from_account_id"),
-                        rs.getLong("to_account_id")
+                        rs.getLong("to_account_id"),
+                        rs.getBoolean("is_deleted")
                 ));
             return transactions;
         } catch (SQLException e) {
@@ -118,11 +171,22 @@ public enum TransactionDAO {
         }
     }
 
-    public void deleteTransaction(Transaction transaction) {
-        String sql = "DELETE FROM Transaction WHERE transaction_id = ?";
+    public void deleteTransactionById(Long id) {
+        String sql = "UPDATE Transaction SET is_deleted = TRUE WHERE transaction_id = ?";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, transaction.getTransactionId());
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteTransactionsByAccountId(Long accountId) {
+        String sql = "UPDATE Transaction SET is_deleted = TRUE WHERE account_id = ? AND is_deleted = FALSE";
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, accountId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

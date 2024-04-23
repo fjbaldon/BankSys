@@ -18,7 +18,7 @@ public enum LoginDAO {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, login.getUsername());
-            stmt.setString(2, login.getPasswordHash());  // Assuming passwordHash is already securely hashed
+            stmt.setString(2, login.getPasswordHash());
             stmt.setLong(3, login.getCustomerId());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -26,8 +26,8 @@ public enum LoginDAO {
         }
     }
 
-    public Optional<Login> getLoginById(long id) {
-        String sql = "SELECT * FROM Login WHERE login_id = ?";
+    public Optional<Login> getLoginById(Long id) {
+        String sql = "SELECT * FROM Login WHERE login_id = ? AND is_deleted = FALSE";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -48,7 +48,7 @@ public enum LoginDAO {
     }
 
     public Optional<Login> getLoginByUsername(String username) {
-        String sql = "SELECT * FROM Login WHERE username = ?";
+        String sql = "SELECT * FROM Login WHERE username = ? AND is_deleted = FALSE";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, username);
@@ -68,8 +68,30 @@ public enum LoginDAO {
         }
     }
 
+    public List<Login> getLoginsByCustomerId(Long customerId) {
+        String sql = "SELECT * FROM Login WHERE customer_id = ? AND is_deleted = FALSE";
+        List<Login> logins = new ArrayList<>();
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+                logins.add(new Login(
+                        rs.getLong("login_id"),
+                        rs.getString("username"),
+                        rs.getString("password_hash"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getLong("customer_id")
+                ));
+            return logins;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Login> getLogins() {
-        String sql = "SELECT * FROM Login";
+        String sql = "SELECT * FROM Login WHERE is_deleted = FALSE";
         List<Login> logins = new ArrayList<>();
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -94,7 +116,7 @@ public enum LoginDAO {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, login.getUsername());
-            stmt.setString(2, login.getPasswordHash());  // Assuming passwordHash is already securely hashed
+            stmt.setString(2, login.getPasswordHash());
             stmt.setLong(3, login.getCustomerId());
             stmt.setLong(4, login.getLoginId());
             stmt.executeUpdate();
@@ -103,11 +125,22 @@ public enum LoginDAO {
         }
     }
 
-    public void deleteLogin(Login login) {
-        String sql = "DELETE FROM Login WHERE login_id = ?";
+    public void deleteLoginById(Long id) {
+        String sql = "UPDATE Login SET is_deleted = TRUE WHERE login_id = ?";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, login.getLoginId());
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteLoginsByCustomerId(Long customerId) {
+        String sql = "UPDATE Login SET is_deleted = TRUE WHERE customer_id = ?";
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, customerId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

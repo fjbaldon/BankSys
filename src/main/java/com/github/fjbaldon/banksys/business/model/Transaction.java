@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public final class Transaction {
+public final class Transaction implements Model {
 
     public Long getTransactionId() {
         return transactionId;
@@ -66,17 +66,25 @@ public final class Transaction {
         this.toAccountId = toAccountId;
     }
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Objects.equals(transactionId, that.transactionId) && transactionType == that.transactionType && Objects.equals(amount, that.amount) && Objects.equals(description, that.description) && Objects.equals(createdAt, that.createdAt) && Objects.equals(accountId, that.accountId) && Objects.equals(fromAccountId, that.fromAccountId) && Objects.equals(toAccountId, that.toAccountId);
+        return Objects.equals(transactionId, that.transactionId) && transactionType == that.transactionType && Objects.equals(amount, that.amount) && Objects.equals(description, that.description) && Objects.equals(createdAt, that.createdAt) && Objects.equals(accountId, that.accountId) && Objects.equals(fromAccountId, that.fromAccountId) && Objects.equals(toAccountId, that.toAccountId) && Objects.equals(isDeleted, that.isDeleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, transactionType, amount, description, createdAt, accountId, fromAccountId, toAccountId);
+        return Objects.hash(transactionId, transactionType, amount, description, createdAt, accountId, fromAccountId, toAccountId, isDeleted);
     }
 
     @Override
@@ -90,10 +98,11 @@ public final class Transaction {
                 ", accountId=" + accountId +
                 ", fromAccountId=" + fromAccountId +
                 ", toAccountId=" + toAccountId +
+                ", isDeleted=" + isDeleted +
                 '}';
     }
 
-    private Long transactionId;
+    private final Long transactionId;
     private TransactionType transactionType;
     private BigDecimal amount;
     private String description;
@@ -101,13 +110,14 @@ public final class Transaction {
     private Long accountId;
     private Long fromAccountId;
     private Long toAccountId;
+    private Boolean isDeleted;
 
     /**
      * @param fromAccountId Can be null for non-transfer transactions
      * @param toAccountId   Can be null for non-transfer transactions
      */
     public Transaction(Long transactionId, TransactionType transactionType, BigDecimal amount, String description,
-                       LocalDateTime createdAt, Long accountId, Long fromAccountId, Long toAccountId) {
+                       LocalDateTime createdAt, Long accountId, Long fromAccountId, Long toAccountId, Boolean isDeleted) {
         this.transactionId = transactionId;
         this.transactionType = transactionType;
         this.amount = amount;
@@ -116,13 +126,14 @@ public final class Transaction {
         this.accountId = accountId;
         this.fromAccountId = fromAccountId;
         this.toAccountId = toAccountId;
+        this.isDeleted = isDeleted;
     }
 
     public enum TransactionType {
-        DEPOSIT,
-        WITHDRAWAL,
-        TRANSFER,
-        PAYMENT,
-        FEE
+        Deposit,
+        Withdrawal,
+        Transfer,
+        Payment,
+        Fee
     }
 }

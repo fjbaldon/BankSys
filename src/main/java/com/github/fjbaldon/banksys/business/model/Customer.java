@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public final class Customer {
+public final class Customer implements Model {
 
     public Long getCustomerId() {
         return customerId;
@@ -82,17 +82,25 @@ public final class Customer {
         this.updatedAt = updatedAt;
     }
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(customerId, customer.customerId) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(middleInitial, customer.middleInitial) && Objects.equals(dateOfBirth, customer.dateOfBirth) && Objects.equals(email, customer.email) && Objects.equals(phoneNumber, customer.phoneNumber) && Objects.equals(address, customer.address) && Objects.equals(createdAt, customer.createdAt) && Objects.equals(updatedAt, customer.updatedAt);
+        return Objects.equals(customerId, customer.customerId) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(middleInitial, customer.middleInitial) && Objects.equals(dateOfBirth, customer.dateOfBirth) && Objects.equals(email, customer.email) && Objects.equals(phoneNumber, customer.phoneNumber) && Objects.equals(address, customer.address) && Objects.equals(createdAt, customer.createdAt) && Objects.equals(updatedAt, customer.updatedAt) && Objects.equals(isDeleted, customer.isDeleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, firstName, lastName, middleInitial, dateOfBirth, email, phoneNumber, address, createdAt, updatedAt);
+        return Objects.hash(customerId, firstName, lastName, middleInitial, dateOfBirth, email, phoneNumber, address, createdAt, updatedAt, isDeleted);
     }
 
     @Override
@@ -108,10 +116,11 @@ public final class Customer {
                 ", address='" + address + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", isDeleted=" + isDeleted +
                 '}';
     }
 
-    private Long customerId;
+    private final Long customerId;
     private String firstName;
     private String lastName;
     private String middleInitial;
@@ -121,10 +130,11 @@ public final class Customer {
     private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Boolean isDeleted;
 
     public Customer(Long customerId, String firstName, String lastName, String middleInitial, LocalDate dateOfBirth,
                     String email, String phoneNumber, String address, LocalDateTime createdAt,
-                    LocalDateTime updatedAt) {
+                    LocalDateTime updatedAt, Boolean isDeleted) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -135,5 +145,6 @@ public final class Customer {
         this.address = address;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.isDeleted = isDeleted;
     }
 }

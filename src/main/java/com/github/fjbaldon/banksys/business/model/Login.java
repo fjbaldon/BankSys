@@ -3,7 +3,7 @@ package com.github.fjbaldon.banksys.business.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public final class Login {
+public final class Login implements Model {
 
     public Long getLoginId() {
         return loginId;
@@ -74,7 +74,7 @@ public final class Login {
                 '}';
     }
 
-    private Long loginId;
+    private final Long loginId;
     private String username;
     private String passwordHash;
     private LocalDateTime createdAt;

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public final class Account {
+public final class Account implements Model {
 
     public Long getAccountId() {
         return accountId;
@@ -66,17 +66,25 @@ public final class Account {
         this.customerId = customerId;
     }
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(accountId, account.accountId) && Objects.equals(accountNumber, account.accountNumber) && accountType == account.accountType && Objects.equals(balance, account.balance) && Objects.equals(interestRate, account.interestRate) && Objects.equals(createdAt, account.createdAt) && Objects.equals(updatedAt, account.updatedAt) && Objects.equals(customerId, account.customerId);
+        return Objects.equals(accountId, account.accountId) && Objects.equals(accountNumber, account.accountNumber) && accountType == account.accountType && Objects.equals(balance, account.balance) && Objects.equals(interestRate, account.interestRate) && Objects.equals(createdAt, account.createdAt) && Objects.equals(updatedAt, account.updatedAt) && Objects.equals(customerId, account.customerId) && Objects.equals(isDeleted, account.isDeleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, accountNumber, accountType, balance, interestRate, createdAt, updatedAt, customerId);
+        return Objects.hash(accountId, accountNumber, accountType, balance, interestRate, createdAt, updatedAt, customerId, isDeleted);
     }
 
     @Override
@@ -90,10 +98,11 @@ public final class Account {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", customerId=" + customerId +
+                ", isDeleted=" + isDeleted +
                 '}';
     }
 
-    private Long accountId;
+    private final Long accountId;
     private String accountNumber;
     private AccountType accountType;
     private BigDecimal balance;
@@ -101,12 +110,14 @@ public final class Account {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long customerId;
+    private Boolean isDeleted;
 
     /**
      * @param interestRate Can be null for non-interest-bearing accounts
      */
     public Account(Long accountId, String accountNumber, AccountType accountType, BigDecimal balance,
-                   BigDecimal interestRate, LocalDateTime createdAt, LocalDateTime updatedAt, Long customerId) {
+                   BigDecimal interestRate, LocalDateTime createdAt, LocalDateTime updatedAt, Long customerId,
+                   Boolean isDeleted) {
         this.accountId = accountId;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
@@ -115,11 +126,12 @@ public final class Account {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.customerId = customerId;
+        this.isDeleted = isDeleted;
     }
 
     public enum AccountType {
-        CHECKING,
-        SAVINGS,
-        LOAN
+        Checking,
+        Savings,
+        Loan
     }
 }

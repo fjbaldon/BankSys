@@ -1,6 +1,6 @@
 package com.github.fjbaldon.banksys;
 
-import com.github.fjbaldon.banksys.presentation.view.ApplicationView;
+import com.github.fjbaldon.banksys.presentation.Application;
 
 import javax.swing.*;
 
@@ -14,7 +14,7 @@ public final class Main {
                 System.err.println("Failed to initialize LaF");
             }
 
-            ApplicationView.INSTANCE.display();
+            Application.INSTANCE.display();
         });
     }
 }

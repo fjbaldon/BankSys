@@ -14,10 +14,10 @@ public enum ConnectionManager {
         return ds.getConnection();
     }
 
-    private final HikariConfig config = new HikariConfig();
     private final HikariDataSource ds;
 
     ConnectionManager() {
+        HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mariadb://localhost:3306/BankSys");
         config.setUsername("banksys");
         config.setPassword("sysknab");
