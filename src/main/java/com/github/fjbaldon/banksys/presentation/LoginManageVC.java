@@ -8,12 +8,14 @@ import com.github.fjbaldon.banksys.business.service.AccountService;
 import com.github.fjbaldon.banksys.business.service.CustomerService;
 import com.github.fjbaldon.banksys.business.service.LoginService;
 import com.github.fjbaldon.banksys.business.service.TransactionService;
+import com.github.fjbaldon.banksys.business.service.exception.AccountServiceException;
 import com.github.fjbaldon.banksys.business.service.exception.LoginServiceException;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public enum LoginManageVC implements ApplicationPanel {
 
@@ -41,6 +43,19 @@ public enum LoginManageVC implements ApplicationPanel {
             if (!accounts.isEmpty()) {
                 JOptionPane.showMessageDialog(panel, "This profile still holds account(s). " +
                         "It cannot be deleted until all accounts are cleared.", "Profile Deletion Failure", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int confirmDelete = JOptionPane.showConfirmDialog(
+                    panel,
+                    "Are you sure you want to delete this profile? This action cannot be undone.",
+                    "Confirm Profile Deletion",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirmDelete != JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(panel, "Account deletion canceled.", "Profile Deletion Canceled", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 

@@ -137,7 +137,7 @@ public enum LoginDAO {
     }
 
     public void deleteLoginsByCustomerId(Long customerId) {
-        String sql = "UPDATE Login SET is_deleted = TRUE WHERE customer_id = ?";
+        String sql = "UPDATE Login SET is_deleted = TRUE WHERE customer_id = ? AND is_deleted = FALSE";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, customerId);

@@ -98,7 +98,7 @@ public enum CustomerCreateVC implements ApplicationPanel {
                     return false;
                 }
 
-                boolean isAlphabeticWithSymbols = lastName.matches("[a-zA-Z -’]+");
+                boolean isAlphabeticWithSymbols = lastName.matches("[a-zA-Z\\s'-]+");
                 if (!isAlphabeticWithSymbols) {
                     JOptionPane.showMessageDialog(panel, "Last Name can only contain alphabets, hyphens, apostrophes, and spaces.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
                     return false;

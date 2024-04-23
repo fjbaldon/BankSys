@@ -41,7 +41,31 @@ public enum AccountDAO {
                         rs.getString("account_number"),
                         Account.AccountType.valueOf(rs.getString("account_type")),
                         rs.getBigDecimal("balance"),
-                        rs.getBigDecimal("interest_rate"),  // Assuming interest_rate is BigDecimal
+                        rs.getBigDecimal("interest_rate"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getLong("customer_id"),
+                        rs.getBoolean("is_deleted")
+                ));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<Account> getAccountByIdIgnoreDeleted(Long id) {
+        String sql = "SELECT * FROM Account WHERE account_id = ?";
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return Optional.of(new Account(
+                        rs.getLong("account_id"),
+                        rs.getString("account_number"),
+                        Account.AccountType.valueOf(rs.getString("account_type")),
+                        rs.getBigDecimal("balance"),
+                        rs.getBigDecimal("interest_rate"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
                         rs.getLong("customer_id"),
@@ -154,7 +178,7 @@ public enum AccountDAO {
     }
 
     public void deleteAccountsByCustomerId(Long customerId) {
-        String sql = "UPDATE Account SET is_deleted = TRUE WHERE customer_id = ?";
+        String sql = "UPDATE Account SET is_deleted = TRUE WHERE customer_id = ? AND is_deleted = FALSE";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, customerId);

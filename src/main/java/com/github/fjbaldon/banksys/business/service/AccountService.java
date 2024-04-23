@@ -32,6 +32,10 @@ public enum AccountService {
         return accountDAO.getAccountById(id);
     }
 
+    public Optional<Account> getAccountByIdIgnoreDeleted(Long id) {
+        return accountDAO.getAccountByIdIgnoreDeleted(id);
+    }
+
     public Optional<Account> getAccountByNumber(String accountNumber) {
         return accountDAO.getAccountByAccountNumber(accountNumber);
     }

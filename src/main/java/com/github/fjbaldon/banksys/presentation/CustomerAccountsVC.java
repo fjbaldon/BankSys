@@ -6,9 +6,13 @@ import com.github.fjbaldon.banksys.business.model.Model;
 import com.github.fjbaldon.banksys.business.service.AccountService;
 
 import javax.swing.*;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +43,7 @@ public enum CustomerAccountsVC implements ApplicationPanel {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = accountsTable.getSelectedRow();
                 if (selectedRow != -1) {
+                    selectedRow = accountsTable.convertRowIndexToModel(selectedRow);
                     accountNumberField.setText(accountsTable.getModel().getValueAt(selectedRow, 0).toString());
                     accountTypeField.setText(accountsTable.getModel().getValueAt(selectedRow, 1).toString());
                     balanceField.setText(accountsTable.getModel().getValueAt(selectedRow, 2).toString());
@@ -98,6 +103,8 @@ public enum CustomerAccountsVC implements ApplicationPanel {
         }
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(accountsTable.getModel());
         accountsTable.setRowSorter(sorter);
+        sorter.setComparator(2, Comparator.naturalOrder());
+        sorter.setComparator(3, Comparator.naturalOrder());
     }
 
     private Customer customer;

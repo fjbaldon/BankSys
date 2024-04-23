@@ -10,6 +10,7 @@ import com.github.fjbaldon.banksys.business.service.TransactionService;
 import com.github.fjbaldon.banksys.business.service.exception.AccountServiceException;
 
 import javax.swing.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public enum AccountManageVC implements ApplicationPanel {
         deleteAccountButton.addActionListener(e -> {
             String confirmationText = confirmationField.getText().trim();
 
-            if (confirmationText.equalsIgnoreCase("confirm") && !balanceField.getText().isEmpty()) {
+            if (confirmationText.equalsIgnoreCase("confirm") && (account.getBalance().compareTo(BigDecimal.ZERO) == 0)) {
                 int confirmDelete = JOptionPane.showConfirmDialog(
                         panel,
                         "Are you sure you want to delete this account? This action cannot be undone.",
@@ -68,9 +69,9 @@ public enum AccountManageVC implements ApplicationPanel {
             } else {
                 String message;
                 if (confirmationText.equalsIgnoreCase("confirm"))
-                    message = "Balance field cannot be empty. Please enter the account balance.";
+                    message = "Account balance need to be zero.";
                 else
-                    message = "Account deletion not confirmed. Please type 'yes' (case-insensitive) in the confirmation field to proceed.";
+                    message = "Account deletion not confirmed. Please type 'confirm' (case-insensitive) in the confirmation field to proceed.";
                 JOptionPane.showMessageDialog(panel, message, "Confirmation Required", JOptionPane.WARNING_MESSAGE);
             }
         });

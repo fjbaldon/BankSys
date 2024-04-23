@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public enum TransactionHistoryVC implements ApplicationPanel {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = historyTable.getSelectedRow();
                 if (selectedRow != -1) {
+                    selectedRow = historyTable.convertRowIndexToModel(selectedRow);
                     transactionIdField.setText(historyTable.getModel().getValueAt(selectedRow, 0).toString());
                     transactionTypeField.setText(historyTable.getModel().getValueAt(selectedRow, 1).toString());
                     amountField.setText(historyTable.getModel().getValueAt(selectedRow, 2).toString());
@@ -74,14 +76,14 @@ public enum TransactionHistoryVC implements ApplicationPanel {
         for (Transaction transaction : transactions) {
             String fromAccountNumber = "";
             if (transaction.getFromAccountId() != null) {
-                Optional<Account> fromAccount = accountService.getAccountById(transaction.getFromAccountId());
+                Optional<Account> fromAccount = accountService.getAccountByIdIgnoreDeleted(transaction.getFromAccountId());
                 if (fromAccount.isPresent())
                     fromAccountNumber = fromAccount.get().getAccountNumber();
             }
 
             String toAccountNumber = "";
             if (transaction.getToAccountId() != null) {
-                Optional<Account> toAccount = accountService.getAccountById(transaction.getToAccountId());
+                Optional<Account> toAccount = accountService.getAccountByIdIgnoreDeleted(transaction.getToAccountId());
                 if (toAccount.isPresent())
                     toAccountNumber = toAccount.get().getAccountNumber();
             }
@@ -97,6 +99,7 @@ public enum TransactionHistoryVC implements ApplicationPanel {
         }
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(historyTable.getModel());
         historyTable.setRowSorter(sorter);
+        sorter.setComparator(2, Comparator.naturalOrder());
     }
 
     private Account account;
