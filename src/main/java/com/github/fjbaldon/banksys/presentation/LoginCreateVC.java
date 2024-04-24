@@ -75,11 +75,8 @@ public enum LoginCreateVC implements ApplicationPanel {
             );
 
             Optional<Customer> customerModel = customerService.getCustomerByEmail(customer.getEmail());
-            if (customerModel.isEmpty()) {
-                JOptionPane.showMessageDialog(panel, "This may indicate a problem in the system. Please contact customer support for assistance",
-                        "Profile Creation Failure", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            if (customerModel.isEmpty())
+                throw new IllegalStateException();
 
             customer = null;
             loginService.createLogin(un, pw, customerModel.get());

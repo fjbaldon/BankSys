@@ -58,7 +58,7 @@ public enum CustomerDAO {
     }
 
     public Optional<Customer> getCustomerByEmail(String email) {
-        String sql = "SELECT * FROM Customer WHERE email = ? AND is_deleted = FALSE";
+        String sql = "SELECT * FROM Customer WHERE email = ?";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -84,7 +84,7 @@ public enum CustomerDAO {
     }
 
     public Optional<Customer> getCustomerByPhoneNumber(String phoneNumber) {
-        String sql = "SELECT * FROM Customer WHERE phone_number = ? AND is_deleted = FALSE";
+        String sql = "SELECT * FROM Customer WHERE phone_number = ?";
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, phoneNumber);

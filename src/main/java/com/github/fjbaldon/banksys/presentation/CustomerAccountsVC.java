@@ -89,7 +89,7 @@ public enum CustomerAccountsVC implements ApplicationPanel {
         balanceField.setText("");
         balanceField.setEditable(false);
         interestRateField.setText("");
-        balanceField.setText("");
+        interestRateField.setEditable(false);
 
         String[] cols = {"Account Number", "Type", "Balance", "Interest Rate"};
         DefaultTableModel model = new DefaultTableModel(null, cols);
