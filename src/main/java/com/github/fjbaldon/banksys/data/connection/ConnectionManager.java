@@ -18,9 +18,9 @@ public enum ConnectionManager {
 
     ConnectionManager() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mariadb://localhost:3306/BankSys");
-        config.setUsername("banksys");
-        config.setPassword("sysknab");
+        config.setJdbcUrl("jdbc:mariadb://localhost:3306/banksys");
+        config.setUsername("banker");
+        config.setPassword("2024");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
