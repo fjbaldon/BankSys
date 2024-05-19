@@ -85,7 +85,7 @@ public enum LoginManageVC implements ApplicationPanel {
             } else if (e.getStateChange() == ItemEvent.DESELECTED) {
                 oldPasswordField.setEchoChar('*');
                 newPasswordField.setEchoChar('*');
-                newPasswordField.setEchoChar('*');
+                confirmNewPasswordField.setEchoChar('*');
             }
         });
 
